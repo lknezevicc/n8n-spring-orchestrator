@@ -9,7 +9,8 @@ import lombok.With;
 
 public final class GetExecutionAction extends AbstractGetAction<ExecutionResponse> {
     private final String executionId;
-    @With private final boolean includeData;
+    @With
+    private final boolean includeData;
 
     public GetExecutionAction(HttpClientModule httpClient, String executionId) {
         super(httpClient, ExecutionResponse.class);
@@ -25,7 +26,7 @@ public final class GetExecutionAction extends AbstractGetAction<ExecutionRespons
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.GET_EXECUTIONS_URI + executionId)
+        return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI + "/" + executionId)
                 .withParam(ConstantsUtility.GET_EXECUTIONS_INCLUDE_DATA_QUERY, includeData)
                 .build();
     }

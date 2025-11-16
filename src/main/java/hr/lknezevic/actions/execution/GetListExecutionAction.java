@@ -45,7 +45,7 @@ public final class GetListExecutionAction extends AbstractGetAction<ExecutionLis
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.GET_EXECUTIONS_URI)
+        return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI)
                 .withParam(ConstantsUtility.GET_EXECUTIONS_INCLUDE_DATA_QUERY, includeData)
                 .withParam(ConstantsUtility.GET_EXECUTIONS_STATUS_QUERY,
                         validExecutionStatusFilter(executionStatus) ? executionStatus : null)

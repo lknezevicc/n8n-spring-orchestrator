@@ -4,19 +4,15 @@ import hr.lknezevic.modules.HttpClientModule;
 
 import java.util.concurrent.CompletableFuture;
 
-public abstract class AbstractPutAction<TResponse> extends BaseAction<TResponse> {
-    private final Object request;
-    private final Class<TResponse> responseClass;
-
-    protected AbstractPutAction(HttpClientModule httpClient, Object request, Class<TResponse> responseClass) {
-        super(httpClient);
-        this.request = request;
-        this.responseClass = responseClass;
+public abstract class AbstractPutAction<T> extends BaseAction<T> {
+    protected AbstractPutAction(HttpClientModule httpClient, Class<T> responseClass) {
+        super(httpClient, responseClass);
     }
 
+    protected abstract Object buildRequest();
+
     @Override
-    public CompletableFuture<TResponse> async() {
-        String uri = buildUri();
-        return httpClient.postAsync(uri, request, responseClass);
+    public CompletableFuture<T> async() {
+        return httpClient.postAsync(buildUri(), buildRequest(), responseClass);
     }
 }

@@ -6,12 +6,11 @@ import java.util.concurrent.CompletableFuture;
 
 public abstract class AbstractDeleteAction extends BaseAction<Void> {
     protected AbstractDeleteAction(HttpClientModule httpClient) {
-        super(httpClient);
+        super(httpClient, Void.class);
     }
 
     @Override
     public CompletableFuture<Void> async() {
-        String uri = buildUri();
-        return httpClient.deleteAsync(uri);
+        return httpClient.deleteAsync(buildUri());
     }
 }
