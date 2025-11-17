@@ -9,7 +9,6 @@ import org.springframework.web.reactive.function.client.*;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Log4j2
@@ -57,24 +56,24 @@ public class N8nClientModule implements HttpClientModule {
 
     @Override
     public <T> CompletableFuture<T> postAsync(String uri, Object request, Class<T> responseType) {
-        return webClient.post()
-                .uri(uri)
-                .bodyValue(request != null ? request : Map.of())
-                .retrieve()
-                .bodyToMono(responseType)
-                .subscribeOn(scheduler)
-                .toFuture();
+        WebClient.RequestBodySpec spec = webClient.post().uri(uri);
+
+        Mono<T> mono = (request == null)
+                ? spec.retrieve().bodyToMono(responseType)
+                : spec.bodyValue(request).retrieve().bodyToMono(responseType);
+
+        return mono.subscribeOn(scheduler).toFuture();
     }
 
     @Override
     public <T> CompletableFuture<T> postAsync(String uri, Object request, ParameterizedTypeReference<T> responseType) {
-        return webClient.post()
-                .uri(uri)
-                .bodyValue(request != null ? request : Map.of())
-                .retrieve()
-                .bodyToMono(responseType)
-                .subscribeOn(scheduler)
-                .toFuture();
+        WebClient.RequestBodySpec spec = webClient.post().uri(uri);
+
+        Mono<T> mono = (request == null)
+                ? spec.retrieve().bodyToMono(responseType)
+                : spec.bodyValue(request).retrieve().bodyToMono(responseType);
+
+        return mono.subscribeOn(scheduler).toFuture();
     }
 
     @Override
@@ -89,24 +88,24 @@ public class N8nClientModule implements HttpClientModule {
 
     @Override
     public <T> CompletableFuture<T> putAsync(String uri, Object request, Class<T> responseType) {
-        return webClient.put()
-                .uri(uri)
-                .bodyValue(request != null ? request : Map.of())
-                .retrieve()
-                .bodyToMono(responseType)
-                .subscribeOn(scheduler)
-                .toFuture();
+        WebClient.RequestBodySpec spec = webClient.put().uri(uri);
+
+        Mono<T> mono = (request == null)
+                ? spec.retrieve().bodyToMono(responseType)
+                : spec.bodyValue(request).retrieve().bodyToMono(responseType);
+
+        return mono.subscribeOn(scheduler).toFuture();
     }
 
     @Override
     public <T> CompletableFuture<T> putAsync(String uri, Object request, ParameterizedTypeReference<T> responseType) {
-        return webClient.put()
-                .uri(uri)
-                .bodyValue(request != null ? request : Map.of())
-                .retrieve()
-                .bodyToMono(responseType)
-                .subscribeOn(scheduler)
-                .toFuture();
+        WebClient.RequestBodySpec spec = webClient.put().uri(uri);
+
+        Mono<T> mono = (request == null)
+                ? spec.retrieve().bodyToMono(responseType)
+                : spec.bodyValue(request).retrieve().bodyToMono(responseType);
+
+        return mono.subscribeOn(scheduler).toFuture();
     }
 
     @Override
@@ -121,24 +120,24 @@ public class N8nClientModule implements HttpClientModule {
 
     @Override
     public <T> CompletableFuture<T> patchAsync(String uri, Object request, Class<T> responseType) {
-        return webClient.patch()
-                .uri(uri)
-                .bodyValue(request != null ? request : Map.of())
-                .retrieve()
-                .bodyToMono(responseType)
-                .subscribeOn(scheduler)
-                .toFuture();
+        WebClient.RequestBodySpec spec = webClient.patch().uri(uri);
+
+        Mono<T> mono = (request == null)
+                ? spec.retrieve().bodyToMono(responseType)
+                : spec.bodyValue(request).retrieve().bodyToMono(responseType);
+
+        return mono.subscribeOn(scheduler).toFuture();
     }
 
     @Override
     public <T> CompletableFuture<T> patchAsync(String uri, Object request, ParameterizedTypeReference<T> responseType) {
-        return webClient.patch()
-                .uri(uri)
-                .bodyValue(request != null ? request : Map.of())
-                .retrieve()
-                .bodyToMono(responseType)
-                .subscribeOn(scheduler)
-                .toFuture();
+        WebClient.RequestBodySpec spec = webClient.patch().uri(uri);
+
+        Mono<T> mono = (request == null)
+                ? spec.retrieve().bodyToMono(responseType)
+                : spec.bodyValue(request).retrieve().bodyToMono(responseType);
+
+        return mono.subscribeOn(scheduler).toFuture();
     }
 
     @Override

@@ -46,13 +46,13 @@ public final class GetListExecutionAction extends AbstractGetAction<ExecutionLis
     @Override
     protected String buildUri() {
         return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI)
-                .withParam(ConstantsUtility.GET_EXECUTIONS_INCLUDE_DATA_QUERY, includeData)
-                .withParam(ConstantsUtility.GET_EXECUTIONS_STATUS_QUERY,
+                .withParam(ConstantsUtility.INCLUDE_DATA_QUERY, includeData)
+                .withParam(ConstantsUtility.STATUS_QUERY,
                         validExecutionStatusFilter(executionStatus) ? executionStatus : null)
-                .withParam(ConstantsUtility.GET_EXECUTIONS_WORKFLOW_ID_QUERY, workflowId)
-                .withParam(ConstantsUtility.GET_EXECUTIONS_PROJECT_ID_QUERY, projectId)
-                .withParam(ConstantsUtility.GET_EXECUTIONS_LIMIT_QUERY, (limit > 0 && limit <= 250) ? limit : 100)
-                .withParam(ConstantsUtility.GET_EXECUTIONS_CURSOR_QUERY, cursor)
+                .withParam(ConstantsUtility.WORKFLOW_ID_QUERY, workflowId)
+                .withParam(ConstantsUtility.PROJECT_ID_QUERY, projectId)
+                .withParam(ConstantsUtility.LIMIT_QUERY, (limit > 0 && limit <= 250) ? limit : 100)
+                .withParam(ConstantsUtility.CURSOR_QUERY, cursor)
                 .build();
     }
 

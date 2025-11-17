@@ -27,7 +27,7 @@ public final class GetExecutionAction extends AbstractGetAction<ExecutionRespons
     @Override
     protected String buildUri() {
         return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI + "/" + executionId)
-                .withParam(ConstantsUtility.GET_EXECUTIONS_INCLUDE_DATA_QUERY, includeData)
+                .withParam(ConstantsUtility.INCLUDE_DATA_QUERY, includeData)
                 .build();
     }
 }

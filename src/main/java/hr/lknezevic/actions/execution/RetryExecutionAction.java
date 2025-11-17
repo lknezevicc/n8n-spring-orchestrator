@@ -9,7 +9,7 @@ import lombok.With;
 
 import java.util.Map;
 
-public class RetryExecutionAction extends AbstractPostAction<ExecutionResponse> {
+public final class RetryExecutionAction extends AbstractPostAction<ExecutionResponse> {
     private final String executionId;
     @With private final boolean loadWorkflow;
 
@@ -27,7 +27,7 @@ public class RetryExecutionAction extends AbstractPostAction<ExecutionResponse> 
 
     @Override
     protected Object buildRequest() {
-        return Map.of(ConstantsUtility.POST_EXECUTIONS_LOAD_WORKFLOW, loadWorkflow);
+        return Map.of(ConstantsUtility.LOAD_WORKFLOW_BODY, loadWorkflow);
     }
 
     @Override

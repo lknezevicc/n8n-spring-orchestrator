@@ -5,7 +5,7 @@ import hr.lknezevic.modules.HttpClientModule;
 import hr.lknezevic.utils.ConstantsUtility;
 import hr.lknezevic.utils.UriQueryParameterBuilder;
 
-public class DeleteExecutionAction extends AbstractDeleteAction {
+public final class DeleteExecutionAction extends AbstractDeleteAction {
     private final String executionId;
 
     public DeleteExecutionAction(HttpClientModule httpClient, String executionId) {
