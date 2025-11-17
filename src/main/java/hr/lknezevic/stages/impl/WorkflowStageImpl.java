@@ -31,7 +31,7 @@ public class WorkflowStageImpl implements WorkflowStage {
     }
 
     @Override
-    public GetListExecutionAction list() {
+    public GetListWorkflowAction list() {
         return new GetListWorkflowAction(httpClient);
     }
 
