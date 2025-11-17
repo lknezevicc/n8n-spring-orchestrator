@@ -15,7 +15,6 @@ public final class DeleteWorkflowAction extends AbstractDeleteAction {
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI + "/" + workflowId)
-                .build();
+        return ConstantsUtility.WORKFLOWS_URI + "/" + workflowId;
     }
 }

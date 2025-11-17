@@ -24,7 +24,6 @@ public final class TransferWorkflowToAnotherProjectAction extends AbstractPutAct
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/transfer")
-                .build();
+        return ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/transfer";
     }
 }

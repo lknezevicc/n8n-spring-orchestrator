@@ -21,7 +21,6 @@ public final class DeactivateWorkflowAction extends AbstractPostAction<WorkflowR
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/deactivate")
-                .build();
+        return ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/deactivate";
     }
 }

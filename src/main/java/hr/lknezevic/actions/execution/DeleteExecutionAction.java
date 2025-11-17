@@ -15,7 +15,6 @@ public final class DeleteExecutionAction extends AbstractDeleteAction {
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI + "/" + executionId)
-                .build();
+        return ConstantsUtility.EXECUTIONS_URI + "/" + executionId;
     }
 }

@@ -32,7 +32,6 @@ public final class RetryExecutionAction extends AbstractPostAction<ExecutionResp
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI + "/" + executionId + "/retry")
-                .build();
+        return ConstantsUtility.EXECUTIONS_URI + "/" + executionId + "/retry";
     }
 }

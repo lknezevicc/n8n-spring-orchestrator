@@ -21,7 +21,6 @@ public final class ActivateWorkflowAction extends AbstractPostAction<WorkflowRes
 
     @Override
     protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/activate")
-                .build();
+        return ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/activate";
     }
 }
