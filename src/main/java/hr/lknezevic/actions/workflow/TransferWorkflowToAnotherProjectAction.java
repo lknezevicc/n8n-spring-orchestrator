@@ -3,7 +3,6 @@ package hr.lknezevic.actions.workflow;
 import hr.lknezevic.actions.abstracts.AbstractPutAction;
 import hr.lknezevic.modules.HttpClientModule;
 import hr.lknezevic.utils.ConstantsUtility;
-import hr.lknezevic.utils.UriQueryParameterBuilder;
 
 import java.util.Map;
 

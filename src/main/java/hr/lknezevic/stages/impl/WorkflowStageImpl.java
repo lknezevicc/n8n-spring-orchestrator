@@ -1,6 +1,5 @@
 package hr.lknezevic.stages.impl;
 
-import hr.lknezevic.actions.execution.GetListExecutionAction;
 import hr.lknezevic.actions.workflow.*;
 import hr.lknezevic.modules.HttpClientModule;
 import hr.lknezevic.stages.WorkflowStage;

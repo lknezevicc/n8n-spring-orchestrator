@@ -3,7 +3,7 @@ package hr.lknezevic.modules.impl;
 import hr.lknezevic.autoconfigure.N8nProperties;
 import hr.lknezevic.modules.HttpClientModule;
 import hr.lknezevic.utils.WebClientBuilderUtility;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.reactive.function.client.*;
 import reactor.core.publisher.Mono;
@@ -11,7 +11,7 @@ import reactor.core.scheduler.Scheduler;
 
 import java.util.concurrent.CompletableFuture;
 
-@Log4j2
+@Slf4j
 public class N8nClientModule implements HttpClientModule {
     private final WebClient webClient;
     private final Scheduler scheduler;

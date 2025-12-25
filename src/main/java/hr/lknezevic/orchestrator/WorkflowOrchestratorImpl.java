@@ -2,12 +2,13 @@ package hr.lknezevic.orchestrator;
 
 import hr.lknezevic.modules.HttpClientModule;
 import hr.lknezevic.stages.ExecutionStage;
+import hr.lknezevic.stages.ResultStack;
 import hr.lknezevic.stages.impl.ExecutionStageImpl;
 import hr.lknezevic.stages.WebhookStage;
 import hr.lknezevic.stages.WorkflowStage;
+import hr.lknezevic.stages.impl.WebhookStageImpl;
+import hr.lknezevic.stages.impl.WorkflowStageImpl;
 import lombok.RequiredArgsConstructor;
-
-import java.util.concurrent.Executor;
 
 @RequiredArgsConstructor
 public class WorkflowOrchestratorImpl implements WorkflowOrchestrator {
@@ -20,11 +21,16 @@ public class WorkflowOrchestratorImpl implements WorkflowOrchestrator {
 
     @Override
     public WebhookStage webhooks() {
-        return null;
+        return new WebhookStageImpl(httpClient);
     }
 
     @Override
     public WorkflowStage workflows() {
-        return null;
+        return new WorkflowStageImpl(httpClient);
+    }
+
+    @Override
+    public ResultStack results() {
+        throw new UnsupportedOperationException("ResultStack not yet implemented!");
     }
 }

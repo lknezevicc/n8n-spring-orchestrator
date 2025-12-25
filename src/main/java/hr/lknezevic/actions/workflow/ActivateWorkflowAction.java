@@ -4,7 +4,6 @@ import hr.lknezevic.actions.abstracts.AbstractPostAction;
 import hr.lknezevic.dto.WorkflowResponse;
 import hr.lknezevic.modules.HttpClientModule;
 import hr.lknezevic.utils.ConstantsUtility;
-import hr.lknezevic.utils.UriQueryParameterBuilder;
 
 public final class ActivateWorkflowAction extends AbstractPostAction<WorkflowResponse> {
     private final String workflowId;
