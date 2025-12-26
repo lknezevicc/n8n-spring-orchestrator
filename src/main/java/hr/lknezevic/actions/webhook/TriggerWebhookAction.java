@@ -1,33 +1,31 @@
 package hr.lknezevic.actions.webhook;
 
-import hr.lknezevic.actions.abstracts.AbstractPostAction;
-import hr.lknezevic.modules.HttpClientModule;
-import lombok.With;
+import hr.lknezevic.reactive.http.action.AbstractHttpAction;
+import hr.lknezevic.reactive.http.action.HttpRequestSpec;
+import hr.lknezevic.reactive.http.transport.HttpExecutor;
 
-public final class TriggerWebhookAction extends AbstractPostAction<Void> {
+public final class TriggerWebhookAction extends AbstractHttpAction<Void> {
     private final String webhookPath;
-    @With
     private final Object payload;
 
-    public TriggerWebhookAction(HttpClientModule httpClient, String webhookPath) {
-        super(httpClient, Void.class);
-        this.webhookPath = webhookPath;
-        this.payload = null;
+    public TriggerWebhookAction(HttpExecutor httpExecutor, String webhookPath) {
+        this(httpExecutor, webhookPath, null);
     }
 
-    private TriggerWebhookAction(HttpClientModule httpClient, String webhookPath, Object payload) {
-        super(httpClient, Void.class);
+    private TriggerWebhookAction(HttpExecutor httpExecutor, String webhookPath, Object payload) {
+        super(httpExecutor);
         this.webhookPath = webhookPath;
         this.payload = payload;
     }
 
-    @Override
-    protected Object buildRequest() {
-        return payload;
+    public TriggerWebhookAction withPayload(Object payload) {
+        return new TriggerWebhookAction(this.httpExecutor, this.webhookPath, payload);
     }
 
     @Override
-    protected String buildUri() {
-        return webhookPath.startsWith("/") ? webhookPath : "/" + webhookPath;
+    protected HttpRequestSpec<Void> getRequestSpec() {
+        String uriPath = webhookPath.startsWith("/") ? webhookPath : "/" + webhookPath;
+
+        return HttpRequestSpec.post(uriPath, payload, Void.class);
     }
 }

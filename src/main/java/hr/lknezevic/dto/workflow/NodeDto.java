@@ -1,5 +1,6 @@
 package hr.lknezevic.dto.workflow;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record NodeDto(
@@ -19,5 +20,7 @@ public record NodeDto(
         String onError,
         List<Integer> position,
         ParametersDto parametersDto,
-        CredentialsDto credentialsDto
+        CredentialsDto credentialsDto,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {}

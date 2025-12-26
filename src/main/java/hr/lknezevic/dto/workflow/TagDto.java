@@ -2,11 +2,9 @@ package hr.lknezevic.dto.workflow;
 
 import java.time.LocalDateTime;
 
-public record SharedDto(
-        String role,
-        String workflowId,
-        String projectId,
-        ProjectDto project,
+public record TagDto(
+        String id,
+        String name,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
-) {}
+) { }

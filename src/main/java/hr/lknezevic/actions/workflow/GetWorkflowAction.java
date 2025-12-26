@@ -1,33 +1,36 @@
 package hr.lknezevic.actions.workflow;
 
-import hr.lknezevic.actions.abstracts.AbstractGetAction;
 import hr.lknezevic.dto.WorkflowResponse;
-import hr.lknezevic.modules.HttpClientModule;
+import hr.lknezevic.reactive.http.action.AbstractHttpAction;
+import hr.lknezevic.reactive.http.action.HttpRequestSpec;
+import hr.lknezevic.reactive.http.transport.HttpExecutor;
+import hr.lknezevic.reactive.http.util.UriQueryParameterBuilder;
 import hr.lknezevic.utils.ConstantsUtility;
-import hr.lknezevic.utils.UriQueryParameterBuilder;
-import lombok.With;
 
-public final class GetWorkflowAction extends AbstractGetAction<WorkflowResponse> {
+public final class GetWorkflowAction extends AbstractHttpAction<WorkflowResponse> {
     private final String workflowId;
-    @With
     private final boolean excludePinnedData;
 
-    public GetWorkflowAction(HttpClientModule httpClient, String workflowId) {
-        super(httpClient, WorkflowResponse.class);
-        this.workflowId = workflowId;
-        this.excludePinnedData = true;
+    public GetWorkflowAction(HttpExecutor httpExecutor, String workflowId) {
+        this(httpExecutor, workflowId, true);
     }
 
-    private GetWorkflowAction(HttpClientModule httpClient, String workflowId, boolean excludePinnedData) {
-        super(httpClient, WorkflowResponse.class);
+    private GetWorkflowAction(HttpExecutor httpExecutor, String workflowId, boolean excludePinnedData) {
+        super(httpExecutor);
         this.workflowId = workflowId;
         this.excludePinnedData = excludePinnedData;
     }
 
+    public GetWorkflowAction withExcludePinnedData(boolean excludePinnedData) {
+        return new GetWorkflowAction(this.httpExecutor, this.workflowId, excludePinnedData);
+    }
+
     @Override
-    protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI + "/" + workflowId)
+    protected HttpRequestSpec<WorkflowResponse> getRequestSpec() {
+        String uriPath = new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI + "/" + workflowId)
                 .withParam(ConstantsUtility.EXCLUDE_PINNED_DATA_QUERY, excludePinnedData)
                 .build();
+
+        return HttpRequestSpec.get(uriPath, WorkflowResponse.class);
     }
 }

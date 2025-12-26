@@ -1,25 +1,23 @@
 package hr.lknezevic.actions.workflow;
 
-import hr.lknezevic.actions.abstracts.AbstractPostAction;
 import hr.lknezevic.dto.WorkflowResponse;
-import hr.lknezevic.modules.HttpClientModule;
+import hr.lknezevic.reactive.http.action.AbstractHttpAction;
+import hr.lknezevic.reactive.http.action.HttpRequestSpec;
+import hr.lknezevic.reactive.http.transport.HttpExecutor;
 import hr.lknezevic.utils.ConstantsUtility;
 
-public final class ActivateWorkflowAction extends AbstractPostAction<WorkflowResponse> {
+public final class ActivateWorkflowAction extends AbstractHttpAction<WorkflowResponse> {
     private final String workflowId;
 
-    public ActivateWorkflowAction(HttpClientModule httpClient, String workflowId) {
-        super(httpClient, WorkflowResponse.class);
+    public ActivateWorkflowAction(HttpExecutor httpExecutor, String workflowId) {
+        super(httpExecutor);
         this.workflowId = workflowId;
     }
 
     @Override
-    protected Object buildRequest() {
-        return null;
-    }
+    protected HttpRequestSpec<WorkflowResponse> getRequestSpec() {
+        String uriPath = ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/activate";
 
-    @Override
-    protected String buildUri() {
-        return ConstantsUtility.WORKFLOWS_URI + "/" + workflowId + "/activate";
+        return HttpRequestSpec.post(uriPath, null, WorkflowResponse.class);
     }
 }

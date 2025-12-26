@@ -1,17 +1,13 @@
 package hr.lknezevic.actions.workflow;
 
-import hr.lknezevic.actions.abstracts.AbstractGetAction;
 import hr.lknezevic.dto.WorkflowListResponse;
-import hr.lknezevic.modules.HttpClientModule;
+import hr.lknezevic.reactive.http.action.AbstractHttpAction;
+import hr.lknezevic.reactive.http.action.HttpRequestSpec;
+import hr.lknezevic.reactive.http.transport.HttpExecutor;
+import hr.lknezevic.reactive.http.util.UriQueryParameterBuilder;
 import hr.lknezevic.utils.ConstantsUtility;
-import hr.lknezevic.utils.UriQueryParameterBuilder;
-import lombok.AccessLevel;
-import lombok.With;
 
-@With
-public final class GetListWorkflowAction extends AbstractGetAction<WorkflowListResponse> {
-    @With(AccessLevel.NONE)
-    private final HttpClientModule httpClient;
+public final class GetListWorkflowAction extends AbstractHttpAction<WorkflowListResponse> {
     private final boolean active;
     private final String tags;
     private final String name;
@@ -20,22 +16,22 @@ public final class GetListWorkflowAction extends AbstractGetAction<WorkflowListR
     private final int limit;
     private final String cursor;
 
-    public GetListWorkflowAction(HttpClientModule httpClient) {
-        super(httpClient, WorkflowListResponse.class);
-        this.httpClient = httpClient;
-        this.active = true;
-        this.tags = null;
-        this.name = null;
-        this.projectId = null;
-        this.excludePinnedData = true;
-        this.limit = 100;
-        this.cursor = null;
+    public GetListWorkflowAction(HttpExecutor httpExecutor) {
+        this(
+                httpExecutor,
+                true,
+                null,
+                null,
+                null,
+                true,
+                100,
+                null
+        );
     }
 
-    private GetListWorkflowAction(HttpClientModule httpClient, boolean active, String tags, String name,
+    private GetListWorkflowAction(HttpExecutor httpExecutor, boolean active, String tags, String name,
                                   String projectId, boolean excludePinnedData, int limit, String cursor) {
-        super(httpClient, WorkflowListResponse.class);
-        this.httpClient = httpClient;
+        super(httpExecutor);
         this.active = active;
         this.tags = tags;
         this.name = name;
@@ -45,9 +41,100 @@ public final class GetListWorkflowAction extends AbstractGetAction<WorkflowListR
         this.cursor = cursor;
     }
 
+    public GetListWorkflowAction withActive(boolean active) {
+        return new GetListWorkflowAction(
+                httpExecutor,
+                active,
+                this.tags,
+                this.name,
+                this.projectId,
+                this.excludePinnedData,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListWorkflowAction withTags(String tags) {
+        return new GetListWorkflowAction(
+                httpExecutor,
+                this.active,
+                tags,
+                this.name,
+                this.projectId,
+                this.excludePinnedData,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListWorkflowAction withName(String name) {
+        return new GetListWorkflowAction(
+                httpExecutor,
+                this.active,
+                this.tags,
+                name,
+                this.projectId,
+                this.excludePinnedData,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListWorkflowAction withProjectId(String projectId) {
+        return new GetListWorkflowAction(
+                httpExecutor,
+                this.active,
+                this.tags,
+                this.name,
+                projectId,
+                this.excludePinnedData,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListWorkflowAction withExcludePinnedData(boolean excludePinnedData) {
+        return new GetListWorkflowAction(
+                httpExecutor,
+                this.active,
+                this.tags,
+                this.name,
+                this.projectId,
+                excludePinnedData,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListWorkflowAction withLimit(int limit) {
+        return new GetListWorkflowAction(
+                httpExecutor,
+                this.active,
+                this.tags,
+                this.name,
+                this.projectId,
+                this.excludePinnedData,
+                normalizeLimit(limit),
+                this.cursor
+        );
+    }
+
+    public GetListWorkflowAction withCursor(String cursor) {
+        return new GetListWorkflowAction(
+                httpExecutor,
+                this.active,
+                this.tags,
+                this.name,
+                this.projectId,
+                this.excludePinnedData,
+                this.limit,
+                cursor
+        );
+    }
+
     @Override
-    protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI)
+    protected HttpRequestSpec<WorkflowListResponse> getRequestSpec() {
+        String uriPath = new UriQueryParameterBuilder(ConstantsUtility.WORKFLOWS_URI)
                 .withParam(ConstantsUtility.ACTIVE_QUERY, active)
                 .withParam(ConstantsUtility.TAGS_QUERY, tags)
                 .withParam(ConstantsUtility.NAME_QUERY, name)
@@ -56,5 +143,11 @@ public final class GetListWorkflowAction extends AbstractGetAction<WorkflowListR
                 .withParam(ConstantsUtility.LIMIT_QUERY, (limit > 0 && limit <= 250) ? limit : 100)
                 .withParam(ConstantsUtility.CURSOR_QUERY, cursor)
                 .build();
+
+        return HttpRequestSpec.get(uriPath, WorkflowListResponse.class);
+    }
+
+    private int normalizeLimit(int limit) {
+        return (limit > 0 && limit <= 250) ? limit : 100;
     }
 }

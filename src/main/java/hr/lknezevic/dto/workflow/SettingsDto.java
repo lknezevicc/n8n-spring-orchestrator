@@ -8,5 +8,9 @@ public record SettingsDto(
         int executionTimeout,
         String errorWorkflow,
         String timezone,
-        String executionOrder
+        String executionOrder,
+        String callerPolicy,
+        String callerIds,
+        int timeSavedPerExecution,
+        boolean availableInMCP
 ) {}

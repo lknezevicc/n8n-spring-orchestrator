@@ -1,5 +1,7 @@
 package hr.lknezevic.dto.workflow;
 
 public record ProjectDto(
-        String name
+        String id,
+        String name,
+        String type
 ) {}

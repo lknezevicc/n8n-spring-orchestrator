@@ -1,18 +1,14 @@
 package hr.lknezevic.actions.execution;
 
-import hr.lknezevic.actions.abstracts.AbstractGetAction;
 import hr.lknezevic.dto.ExecutionListResponse;
 import hr.lknezevic.enums.ExecutionStatus;
-import hr.lknezevic.modules.HttpClientModule;
+import hr.lknezevic.reactive.http.action.AbstractHttpAction;
+import hr.lknezevic.reactive.http.action.HttpRequestSpec;
+import hr.lknezevic.reactive.http.transport.HttpExecutor;
+import hr.lknezevic.reactive.http.util.UriQueryParameterBuilder;
 import hr.lknezevic.utils.ConstantsUtility;
-import hr.lknezevic.utils.UriQueryParameterBuilder;
-import lombok.AccessLevel;
-import lombok.With;
 
-@With
-public final class GetListExecutionAction extends AbstractGetAction<ExecutionListResponse> {
-    @With(AccessLevel.NONE)
-    private final HttpClientModule httpClient;
+public final class GetListExecutionAction extends AbstractHttpAction<ExecutionListResponse> {
     private final boolean includeData;
     private final ExecutionStatus executionStatus;
     private final String workflowId;
@@ -20,21 +16,21 @@ public final class GetListExecutionAction extends AbstractGetAction<ExecutionLis
     private final int limit;
     private final String cursor;
 
-    public GetListExecutionAction(HttpClientModule httpClient) {
-        super(httpClient, ExecutionListResponse.class);
-        this.httpClient = httpClient;
-        this.includeData = false;
-        this.executionStatus = null;
-        this.workflowId = null;
-        this.projectId = null;
-        this.limit = 100;
-        this.cursor = null;
+    public GetListExecutionAction(HttpExecutor httpExecutor) {
+        this(
+                httpExecutor,
+                false,
+                null,
+                null,
+                null,
+                100,
+                null
+        );
     }
 
-    private GetListExecutionAction(HttpClientModule httpClient, boolean includeData, ExecutionStatus executionStatus,
+    private GetListExecutionAction(HttpExecutor httpExecutor, boolean includeData, ExecutionStatus executionStatus,
                                    String workflowId, String projectId, int limit, String cursor) {
-        super(httpClient, ExecutionListResponse.class);
-        this.httpClient = httpClient;
+        super(httpExecutor);
         this.includeData = includeData;
         this.executionStatus = executionStatus;
         this.workflowId = workflowId;
@@ -43,17 +39,91 @@ public final class GetListExecutionAction extends AbstractGetAction<ExecutionLis
         this.cursor = cursor;
     }
 
+    public GetListExecutionAction withIncludeData(boolean includeData) {
+        return new GetListExecutionAction(
+                httpExecutor,
+                includeData,
+                this.executionStatus,
+                this.workflowId,
+                this.projectId,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListExecutionAction withExecutionStatus(ExecutionStatus status) {
+        return new GetListExecutionAction(
+                httpExecutor,
+                this.includeData,
+                status,
+                this.workflowId,
+                this.projectId,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListExecutionAction withWorkflowId(String workflowId) {
+        return new GetListExecutionAction(
+                httpExecutor,
+                this.includeData,
+                this.executionStatus,
+                workflowId,
+                this.projectId,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListExecutionAction withProjectId(String projectId) {
+        return new GetListExecutionAction(
+                httpExecutor,
+                this.includeData,
+                this.executionStatus,
+                this.workflowId,
+                projectId,
+                this.limit,
+                this.cursor
+        );
+    }
+
+    public GetListExecutionAction withLimit(int limit) {
+        return new GetListExecutionAction(
+                httpExecutor,
+                this.includeData,
+                this.executionStatus,
+                this.workflowId,
+                this.projectId,
+                limit,
+                this.cursor
+        );
+    }
+
+    public GetListExecutionAction withCursor(String cursor) {
+        return new GetListExecutionAction(
+                httpExecutor,
+                this.includeData,
+                this.executionStatus,
+                this.workflowId,
+                this.projectId,
+                this.limit,
+                cursor
+        );
+    }
+
     @Override
-    protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI)
+    protected HttpRequestSpec<ExecutionListResponse> getRequestSpec() {
+        String uriPath = new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI)
                 .withParam(ConstantsUtility.INCLUDE_DATA_QUERY, includeData)
                 .withParam(ConstantsUtility.STATUS_QUERY,
                         validExecutionStatusFilter(executionStatus) ? executionStatus : null)
                 .withParam(ConstantsUtility.WORKFLOW_ID_QUERY, workflowId)
                 .withParam(ConstantsUtility.PROJECT_ID_QUERY, projectId)
-                .withParam(ConstantsUtility.LIMIT_QUERY, (limit > 0 && limit <= 250) ? limit : 100)
+                .withParam(ConstantsUtility.LIMIT_QUERY, normalizeLimit(limit))
                 .withParam(ConstantsUtility.CURSOR_QUERY, cursor)
                 .build();
+
+        return HttpRequestSpec.get(uriPath, ExecutionListResponse.class);
     }
 
     private boolean validExecutionStatusFilter(ExecutionStatus executionStatus) {
@@ -63,5 +133,9 @@ public final class GetListExecutionAction extends AbstractGetAction<ExecutionLis
             case CANCELLED, ERROR, RUNNING, SUCCESS, WAITING -> true;
             default -> false;
         };
+    }
+
+    private int normalizeLimit(int limit) {
+        return (limit > 0 && limit <= 250) ? limit : 100;
     }
 }

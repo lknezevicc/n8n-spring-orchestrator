@@ -1,33 +1,36 @@
 package hr.lknezevic.actions.execution;
 
-import hr.lknezevic.actions.abstracts.AbstractGetAction;
 import hr.lknezevic.dto.ExecutionResponse;
-import hr.lknezevic.modules.HttpClientModule;
+import hr.lknezevic.reactive.http.action.AbstractHttpAction;
+import hr.lknezevic.reactive.http.action.HttpRequestSpec;
+import hr.lknezevic.reactive.http.transport.HttpExecutor;
+import hr.lknezevic.reactive.http.util.UriQueryParameterBuilder;
 import hr.lknezevic.utils.ConstantsUtility;
-import hr.lknezevic.utils.UriQueryParameterBuilder;
-import lombok.With;
 
-public final class GetExecutionAction extends AbstractGetAction<ExecutionResponse> {
+public final class GetExecutionAction extends AbstractHttpAction<ExecutionResponse> {
     private final String executionId;
-    @With
     private final boolean includeData;
 
-    public GetExecutionAction(HttpClientModule httpClient, String executionId) {
-        super(httpClient, ExecutionResponse.class);
-        this.executionId = executionId;
-        this.includeData = false;
+    public GetExecutionAction(HttpExecutor httpExecutor, String executionId) {
+        this(httpExecutor, executionId, false);
     }
 
-    private GetExecutionAction(HttpClientModule httpClient, String executionId, boolean includeData) {
-        super(httpClient, ExecutionResponse.class);
+    private GetExecutionAction(HttpExecutor httpExecutor, String executionId, boolean includeData) {
+        super(httpExecutor);
         this.executionId = executionId;
         this.includeData = includeData;
     }
 
+    public GetExecutionAction withIncludeData(boolean includeData) {
+        return new GetExecutionAction(this.httpExecutor, this.executionId, includeData);
+    }
+
     @Override
-    protected String buildUri() {
-        return new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI + "/" + executionId)
+    protected HttpRequestSpec<ExecutionResponse> getRequestSpec() {
+        String uriPath = new UriQueryParameterBuilder(ConstantsUtility.EXECUTIONS_URI + "/" + executionId)
                 .withParam(ConstantsUtility.INCLUDE_DATA_QUERY, includeData)
                 .build();
+
+        return HttpRequestSpec.get(uriPath, ExecutionResponse.class);
     }
 }
