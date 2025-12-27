@@ -29,7 +29,7 @@ public final class GetListWorkflowAction extends AbstractHttpAction<WorkflowList
         );
     }
 
-    private GetListWorkflowAction(HttpExecutor httpExecutor, boolean active, String tags, String name,
+    GetListWorkflowAction(HttpExecutor httpExecutor, boolean active, String tags, String name,
                                   String projectId, boolean excludePinnedData, int limit, String cursor) {
         super(httpExecutor);
         this.active = active;

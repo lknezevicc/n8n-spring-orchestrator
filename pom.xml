@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.github.lknezevicc</groupId>
             <artifactId>reactive-http-action-sdk</artifactId>
-            <version>7cbbb1b1d8</version>
+            <version>-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

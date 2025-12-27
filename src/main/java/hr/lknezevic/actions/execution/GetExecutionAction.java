@@ -15,7 +15,7 @@ public final class GetExecutionAction extends AbstractHttpAction<ExecutionRespon
         this(httpExecutor, executionId, false);
     }
 
-    private GetExecutionAction(HttpExecutor httpExecutor, String executionId, boolean includeData) {
+    GetExecutionAction(HttpExecutor httpExecutor, String executionId, boolean includeData) {
         super(httpExecutor);
         this.executionId = executionId;
         this.includeData = includeData;

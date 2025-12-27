@@ -6,7 +6,7 @@ import hr.lknezevic.stages.WebhookStage;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class WebhookStageImpl implements WebhookStage {
+public final class WebhookStageImpl implements WebhookStage {
     private final HttpExecutor httpExecutor;
 
     @Override

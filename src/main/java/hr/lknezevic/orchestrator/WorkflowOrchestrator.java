@@ -5,7 +5,7 @@ import hr.lknezevic.stages.ResultStack;
 import hr.lknezevic.stages.WebhookStage;
 import hr.lknezevic.stages.WorkflowStage;
 
-public interface WorkflowOrchestrator {
+public sealed interface WorkflowOrchestrator permits WorkflowOrchestratorImpl {
     ExecutionStage executions();
     WebhookStage webhooks();
     WorkflowStage workflows();

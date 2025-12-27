@@ -12,7 +12,7 @@ public final class TriggerWebhookAction extends AbstractHttpAction<Void> {
         this(httpExecutor, webhookPath, null);
     }
 
-    private TriggerWebhookAction(HttpExecutor httpExecutor, String webhookPath, Object payload) {
+    TriggerWebhookAction(HttpExecutor httpExecutor, String webhookPath, Object payload) {
         super(httpExecutor);
         this.webhookPath = webhookPath;
         this.payload = payload;

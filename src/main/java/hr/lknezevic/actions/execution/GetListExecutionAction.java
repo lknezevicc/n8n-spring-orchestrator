@@ -28,7 +28,7 @@ public final class GetListExecutionAction extends AbstractHttpAction<ExecutionLi
         );
     }
 
-    private GetListExecutionAction(HttpExecutor httpExecutor, boolean includeData, ExecutionStatus executionStatus,
+    GetListExecutionAction(HttpExecutor httpExecutor, boolean includeData, ExecutionStatus executionStatus,
                                    String workflowId, String projectId, int limit, String cursor) {
         super(httpExecutor);
         this.includeData = includeData;

@@ -9,7 +9,7 @@ import hr.lknezevic.stages.ExecutionStage;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ExecutionStageImpl implements ExecutionStage {
+public final class ExecutionStageImpl implements ExecutionStage {
     private final HttpExecutor httpExecutor;
 
     @Override

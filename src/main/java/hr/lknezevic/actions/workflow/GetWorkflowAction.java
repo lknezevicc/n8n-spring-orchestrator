@@ -15,7 +15,7 @@ public final class GetWorkflowAction extends AbstractHttpAction<WorkflowResponse
         this(httpExecutor, workflowId, true);
     }
 
-    private GetWorkflowAction(HttpExecutor httpExecutor, String workflowId, boolean excludePinnedData) {
+    GetWorkflowAction(HttpExecutor httpExecutor, String workflowId, boolean excludePinnedData) {
         super(httpExecutor);
         this.workflowId = workflowId;
         this.excludePinnedData = excludePinnedData;

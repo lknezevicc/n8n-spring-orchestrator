@@ -11,7 +11,7 @@ import hr.lknezevic.stages.impl.WorkflowStageImpl;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class WorkflowOrchestratorImpl implements WorkflowOrchestrator {
+public final class WorkflowOrchestratorImpl implements WorkflowOrchestrator {
     private final HttpExecutor httpExecutor;
 
     @Override

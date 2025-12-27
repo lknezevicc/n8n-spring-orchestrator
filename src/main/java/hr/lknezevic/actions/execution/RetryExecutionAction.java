@@ -16,7 +16,7 @@ public final class RetryExecutionAction extends AbstractHttpAction<ExecutionResp
         this(httpExecutor, executionId, false);
     }
 
-    private RetryExecutionAction(HttpExecutor httpExecutor, String executionId, boolean loadWorkflow) {
+    RetryExecutionAction(HttpExecutor httpExecutor, String executionId, boolean loadWorkflow) {
         super(httpExecutor);
         this.executionId = executionId;
         this.loadWorkflow = loadWorkflow;
