@@ -53,6 +53,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.42</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -65,7 +66,7 @@
         <dependency>
             <groupId>com.github.lknezevicc</groupId>
             <artifactId>reactive-http-action-sdk</artifactId>
-            <version>-SNAPSHOT</version>
+            <version>5eb095c139</version>
         </dependency>
     </dependencies>
 

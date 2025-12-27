@@ -1,10 +1,8 @@
 package hr.lknezevic.orchestrator;
 
 import hr.lknezevic.reactive.http.transport.HttpExecutor;
-import hr.lknezevic.stages.ExecutionStage;
-import hr.lknezevic.stages.ResultStack;
-import hr.lknezevic.stages.WebhookStage;
-import hr.lknezevic.stages.WorkflowStage;
+import hr.lknezevic.stages.*;
+import hr.lknezevic.stages.impl.ActionBuilderStageImpl;
 import hr.lknezevic.stages.impl.ExecutionStageImpl;
 import hr.lknezevic.stages.impl.WebhookStageImpl;
 import hr.lknezevic.stages.impl.WorkflowStageImpl;
@@ -32,5 +30,10 @@ public final class WorkflowOrchestratorImpl implements WorkflowOrchestrator {
     @Override
     public ResultStack results() {
         throw new UnsupportedOperationException("ResultStack not yet implemented!");
+    }
+
+    @Override
+    public ActionBuilderStage actionBuilder() {
+        return new ActionBuilderStageImpl(httpExecutor);
     }
 }
